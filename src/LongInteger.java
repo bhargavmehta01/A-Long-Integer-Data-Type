@@ -183,7 +183,9 @@ public class LongInteger {
 			{
 				while(tempfirst!=this.list.first() && tempsecond!=i.list.first())
 				{
-					if(tempfirst.getValue()>tempsecond.getValue())
+					if(tempfirst.getValue()==tempsecond.getValue())
+						return false;
+					else if(tempfirst.getValue()>tempsecond.getValue())
 					{
 						return flag;
 					}
@@ -209,7 +211,9 @@ public class LongInteger {
 			{
 				while(tempfirst!=this.list.first() && tempsecond!=i.list.first())
 				{
-					if(tempfirst.getValue()<tempsecond.getValue())
+					if(tempfirst.getValue()==tempsecond.getValue())
+						return false;
+					else if(tempfirst.getValue()<tempsecond.getValue())
 						return flag;
 					else
 					{
@@ -243,7 +247,12 @@ public class LongInteger {
     public boolean greaterThan(LongInteger i) {
     	if(this.list.isEmpty() || i.list.isEmpty())
     		return false;
-    	else if()
+    	else if(this.getSign() && i.getSign())
+    	{
+    		if(this.list.size()>i.list.size())
+    			return false;
+    		
+    	}
     }
     
     
