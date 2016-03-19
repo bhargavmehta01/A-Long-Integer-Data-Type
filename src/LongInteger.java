@@ -20,7 +20,6 @@ public class LongInteger {
 			{
 				lngint=s.substring(1, s.length());
 				this.setSign(true);
-
 			}
 			else
 			{
@@ -34,7 +33,6 @@ public class LongInteger {
 
 			for(int i=0; i<listlength; i++)
 			{
-
 				if(intlength<4)
 				{
 					substr=lngint.substring(0, intlength);
@@ -53,8 +51,6 @@ public class LongInteger {
 					list.insertLast(number);
 				}
 				intlength=intlength-4;
-
-
 			}
 		}
 	}
@@ -111,17 +107,18 @@ public class LongInteger {
 		}
 	}
 
-	public void setSign(boolean sign) {
+	public void setSign(boolean sign) 
+	{
 		isNegative = sign;
-
 	}
 
-	public boolean getSign() {
+	public boolean getSign() 
+	{
 		return isNegative;
 	}
 
-	public int getDigitCount() {
-
+	public int getDigitCount() 
+	{
 		int temp=list.last().getValue();
 		int tempsize=0;
 		int dgtcount;
@@ -132,7 +129,6 @@ public class LongInteger {
 		}
 		dgtcount=((list.size()-1)*4)+tempsize;
 		return dgtcount;
-
 	}
 
 	public boolean equalTo(LongInteger i) 
@@ -162,10 +158,8 @@ public class LongInteger {
 			}
 			if(tempfirst.getValue() != tempsecond.getValue())
 				flag=false;
-
 			return flag;
 		}
-
 	}
 
 	public boolean lessThan(LongInteger i) 
@@ -178,26 +172,31 @@ public class LongInteger {
 		else if(this.getSign() && i.getSign())
 		{
 			if(this.list.size()>i.list.size())
-				return flag;
+				return true;
 			else if(this.list.size()==i.list.size())
 			{
-				while(tempfirst!=this.list.first() && tempsecond!=i.list.first())
+				if(this.list.first()==this.list.last() && tempfirst.getValue()==tempsecond.getValue())
 				{
-					if(tempfirst.getValue()==tempsecond.getValue())
-						return false;
-					else if(tempfirst.getValue()>tempsecond.getValue())
-					{
-						return flag;
-					}
-					else
-					{
-						tempfirst=this.list.before(tempfirst);
-						tempsecond=i.list.before(tempsecond);
-					}
+					return false;
 				}
-				if(tempfirst.getValue()<tempsecond.getValue())
-					flag=false;;
+				else
+				{
+					while(tempfirst!=this.list.first() && tempsecond!=i.list.first() && tempfirst.getValue()==tempsecond.getValue())
+					{
+						if(tempfirst.getValue()>tempsecond.getValue())
+							return true;
+						else
+						{
+							tempfirst=this.list.before(tempfirst);
+							tempsecond=i.list.before(tempsecond);
+						}
+					}
+					if(tempfirst.getValue()<tempsecond.getValue())
+						flag=false;
+					else if(tempfirst.getValue()==tempsecond.getValue())
+						flag=false;
 					return flag;
+				}
 			}
 			else
 				return false;		
@@ -206,57 +205,135 @@ public class LongInteger {
 		else if(!this.getSign() && !i.getSign())
 		{
 			if(this.list.size()<i.list.size())
-				return flag;
+				return true;
 			else if(this.list.size()==i.list.size())
 			{
-				while(tempfirst!=this.list.first() && tempsecond!=i.list.first())
+				if(this.list.first()==this.list.last() && tempfirst.getValue()==tempsecond.getValue())
 				{
-					if(tempfirst.getValue()==tempsecond.getValue())
-						return false;
-					else if(tempfirst.getValue()<tempsecond.getValue())
-						return flag;
-					else
-					{
-						tempfirst=this.list.before(tempfirst);
-						tempsecond=i.list.before(tempsecond);
-					}
+					return false;
 				}
-				if(tempfirst.getValue()>tempsecond.getValue())
-					flag=false;;
+				else
+				{
+					while(tempfirst!=this.list.first() && tempsecond!=i.list.first() && tempfirst.getValue()==tempsecond.getValue())
+					{
+						if(tempfirst.getValue()<tempsecond.getValue())
+							return true;
+						else
+						{
+							tempfirst=this.list.before(tempfirst);
+							tempsecond=i.list.before(tempsecond);
+						}
+					}
+					if(tempfirst.getValue()>tempsecond.getValue())
+						flag=false;
+					else if(tempfirst.getValue()==tempsecond.getValue())
+						flag=false;
 					return flag;
+				}
 			}
 			else
-				return false;
+				return flag;
 		}
 
 		else
 		{
-			if(!this.getSign() || !i.getSign())
-			{
-				if(this.getSign())
-					return true;
-				else
-					return false;
-			}
-			return false;
+			if((!this.getSign() || !i.getSign()) && this.getSign())
+				return true;
+			else
+				return false;
 		}
 	}
 
 
 
-    public boolean greaterThan(LongInteger i) {
-    	if(this.list.isEmpty() || i.list.isEmpty())
-    		return false;
-    	else if(this.getSign() && i.getSign())
-    	{
-    		if(this.list.size()>i.list.size())
-    			return false;
-    		
-    	}
-    }
-    
-    
-    
+	public boolean greaterThan(LongInteger i) 
+	{
+		Position tempfirst = this.list.last();
+		Position tempsecond = i.list.last();
+		boolean flag=true;
+		if(this.list.isEmpty() || i.list.isEmpty())
+			return false;
+		else if(this.getSign() && i.getSign())
+		{
+			if(this.list.size()<i.list.size())
+				return true;
+			else if(this.list.size()==i.list.size())
+			{
+				if(this.list.first()==this.list.last() && tempfirst.getValue()==tempsecond.getValue())
+				{
+					return false;
+				}
+				else
+				{
+					while(tempfirst!=this.list.first() && tempsecond!=i.list.first() && tempfirst.getValue()==tempsecond.getValue())
+					{
+						if(tempfirst.getValue()<tempsecond.getValue())
+							return true;
+						else
+						{
+							tempfirst=this.list.before(tempfirst);
+							tempsecond=i.list.before(tempsecond);
+						}
+					}
+					if(tempfirst.getValue()>tempsecond.getValue())
+						flag=false;
+					else if(tempfirst.getValue()==tempsecond.getValue())
+						flag=false;
+					return flag;
+				}
+			}
+			else
+				return false;
+		}
+
+		else if(!this.getSign() && !i.getSign())
+		{
+			if(this.list.size()>i.list.size())
+				return true;
+			else if(this.list.size()==i.list.size())
+			{
+				if(this.list.first()==this.list.last() && tempfirst.getValue()==tempsecond.getValue())
+				{
+					return false;
+				}
+				else
+				{
+					while(tempfirst!=this.list.first() && tempsecond!=i.list.first() && tempfirst.getValue()==tempsecond.getValue())
+					{
+						if(tempfirst.getValue()>tempsecond.getValue())
+							return true;
+						else
+						{
+							tempfirst=this.list.before(tempfirst);
+							tempsecond=i.list.before(tempsecond);
+						}
+					}
+					if(tempfirst.getValue()<tempsecond.getValue())
+						flag=false;
+					else if(tempfirst.getValue()==tempsecond.getValue())
+						flag=false;
+					return flag;
+				}
+			}
+			else
+				return flag;
+		}
+
+		else
+		{
+			if((!this.getSign() || !i.getSign()) && this.getSign())
+				return true;
+			else
+				return false;
+		}
+		
+	}
+
+
+}
+
+
+
 /*
     public LongInteger add(LongInteger i) {
 
@@ -273,6 +350,6 @@ public class LongInteger {
     public LongInteger power(int p) {
 
     }
-	 */
+ */
 
-}
+
