@@ -55,15 +55,15 @@ public class LongInteger {
 		}
 	}
 
-	public boolean checkisFirst()
-	{
-		return list.isFirst(list.first());
-	}
-
-	public boolean checkisLast()
-	{
-		return list.isLast(list.last());
-	}
+//	public boolean checkisFirst()
+//	{
+//		return list.isFirst(list.first());
+//	}
+//
+//	public boolean checkisLast()
+//	{
+//		return list.isLast(list.last());
+//	}
 
 
 	public LongInteger() {
@@ -81,7 +81,8 @@ public class LongInteger {
 			System.out.println("There is no number");
 		}
 		else
-		{
+		{	if(this.getSign())
+				System.out.print("-");
 			temp=list.last();
 			System.out.print(temp.getValue()+" ");
 			while(temp!=list.first())

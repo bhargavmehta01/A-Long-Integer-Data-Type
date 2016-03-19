@@ -1,8 +1,8 @@
 
 public class tester 
 {
-	static int m = 2222;
-	static int n = 99999999;
+	static int a = 2222;
+	static int b = 99999999;
 	
 	public static void main(String[] args) {
 
@@ -26,7 +26,19 @@ public class tester
 		LongInteger z3 = new LongInteger("11111122");
 		LongInteger z4 = new LongInteger("11111133");
 		LongInteger zc,zc1;
-
+		
+		System.out.println("Test case 1:");
+		for(int i=0; i<9; i++)
+		{
+			zc=arr[i];
+			System.out.print(alph[i]+" : ");
+			zc.output();
+			System.out.println();
+			System.out.println("is Negative? : "+zc.getSign());
+			System.out.println("No. of digits : "+zc.getDigitCount());
+		}
+		System.out.println();
+		System.out.println("Comparisons : ");
 		for(int i=0; i<9; i++)
 		{
 			zc=arr[i];
@@ -38,25 +50,25 @@ public class tester
 				System.out.println(x+" equal to "+y+" : "+zc.equalTo(zc1));
 				System.out.println(x+" less than "+y+" : "+zc.lessThan(zc1));
 				System.out.println(x+" greater than "+y+" : "+zc.greaterThan(zc1));
-				
+				System.out.println();
 			}
 		}
-		System.out.println("Overflow digits in a are "+UtilityOperations.overflow(m));
-		System.out.println("Underflow digits in a are "+UtilityOperations.underflow(m));
-		System.out.println("Number of digits in a are "+UtilityOperations.digits(m));
+		System.out.println("Overflow digits in a are "+UtilityOperations.overflow(a));
+		System.out.println("Underflow digits in a are "+UtilityOperations.underflow(a));
+		System.out.println("Number of digits in a are "+UtilityOperations.digits(a));
 		
-		System.out.println("Overflow digits in b are "+UtilityOperations.overflow(n));
-		System.out.println("Underflow digits in b are "+UtilityOperations.underflow(n));
-		System.out.println("Number of digits in b are "+UtilityOperations.digits(n));
+		System.out.println("Overflow digits in b are "+UtilityOperations.overflow(b));
+		System.out.println("Underflow digits in b are "+UtilityOperations.underflow(b));
+		System.out.println("Number of digits in b are "+UtilityOperations.digits(b));
 
-		System.out.println("Sign is "+F.getSign());
-		System.out.println("Digit count "+F.getDigitCount());
+//		System.out.println("Sign is "+F.getSign());
+//		System.out.println("Digit count "+F.getDigitCount());
 
-		System.out.println("Is it first? : "+F.checkisFirst());
-		System.out.println("Is it last? : "+F.checkisLast());
-		F.output();
-		System.out.println("\n"+z2.equalTo(z1));
-		System.out.println(z1.lessThan(A));
+//		System.out.println("Is it first? : "+F.checkisFirst());
+//		System.out.println("Is it last? : "+F.checkisLast());
+	
+//		System.out.println("\n"+z2.equalTo(z1));
+//		System.out.println(z1.lessThan(A));
 	//	System.out.println(z1.greaterThan(z2));
 
 
