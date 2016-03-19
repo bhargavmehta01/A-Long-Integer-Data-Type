@@ -143,73 +143,88 @@ public class LongInteger {
 		{
 			return false;
 		}
+		else if(this.getSign() != i.getSign() || this.list.size() != i.list.size() || this.getDigitCount() != i.getDigitCount())
+			return false;
 		else
 		{
-			if(this.getSign()==i.getSign())
+			tempfirst=this.list.first();
+			tempsecond=i.list.first();
+
+			while(tempfirst!=this.list.last() && tempsecond!=i.list.last())				
 			{
-				if(this.list.size()==i.list.size())
+				if(tempfirst.getValue()==tempsecond.getValue())
 				{
-					if(this.getDigitCount()==i.getDigitCount())
-					{
-						tempfirst=this.list.first();
-						tempsecond=i.list.first();
-
-						while(tempfirst!=this.list.last() && tempsecond!=i.list.last())
-						{
-							if(tempfirst.getValue()==tempsecond.getValue())
-							{
-								tempfirst=this.list.after(tempfirst);
-								tempsecond=i.list.after(tempsecond);
-							}
-							else
-							{
-								return false;
-							}
-						}
-						if(tempfirst.getValue() != tempsecond.getValue())
-							flag=false;
-
-						return flag;
-					}
-					return false;
+					tempfirst=this.list.after(tempfirst);
+					tempsecond=i.list.after(tempsecond);
 				}
-				return false;
+				else
+					return false;
 			}
-			else
-				return false;
+			if(tempfirst.getValue() != tempsecond.getValue())
+				flag=false;
+
+			return flag;
 		}
+
 	}
 
 	public boolean lessThan(LongInteger i) 
 	{
-		if(this.getSign() && i.getSign())
+		Position tempfirst=this.list.last();
+		Position tempsecond=i.list.last();
+		boolean flag = true;
+		if(this.list.isEmpty() || i.list.isEmpty())
+			return false;
+		else if(this.getSign() && i.getSign())
 		{
 			if(this.list.size()>i.list.size())
-				return true;
+				return flag;
 			else if(this.list.size()==i.list.size())
 			{
-				if(this.list.last().getValue()>i.list.last().getValue())
-					return true;
-				else 
-					return false;
+				while(tempfirst!=this.list.first() && tempsecond!=i.list.first())
+				{
+					if(tempfirst.getValue()>tempsecond.getValue())
+					{
+						return flag;
+					}
+					else
+					{
+						tempfirst=this.list.before(tempfirst);
+						tempsecond=i.list.before(tempsecond);
+					}
+				}
+				if(tempfirst.getValue()<tempsecond.getValue())
+					flag=false;;
+					return flag;
 			}
 			else
 				return false;		
 		}
+
 		else if(!this.getSign() && !i.getSign())
 		{
 			if(this.list.size()<i.list.size())
-				return true;
+				return flag;
 			else if(this.list.size()==i.list.size())
 			{
-				if(this.list.last().getValue()<i.list.last().getValue())
-					return true;
-				else
-					return false;
+				while(tempfirst!=this.list.first() && tempsecond!=i.list.first())
+				{
+					if(tempfirst.getValue()<tempsecond.getValue())
+						return flag;
+					else
+					{
+						tempfirst=this.list.before(tempfirst);
+						tempsecond=i.list.before(tempsecond);
+					}
+				}
+				if(tempfirst.getValue()>tempsecond.getValue())
+					flag=false;;
+					return flag;
 			}
 			else
 				return false;
-		}	
+		}
+
 		else
 		{
 			if(!this.getSign() || !i.getSign())
@@ -225,11 +240,15 @@ public class LongInteger {
 
 
 
-	/*
     public boolean greaterThan(LongInteger i) {
-
+    	if(this.list.isEmpty() || i.list.isEmpty())
+    		return false;
+    	else if()
     }
-
+    
+    
+    
+/*
     public LongInteger add(LongInteger i) {
 
     }
