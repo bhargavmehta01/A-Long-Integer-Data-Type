@@ -47,6 +47,12 @@ public class tester
 			{
 				zc1=arr[j];
 				y=alph[j];
+				System.out.print(x+" = ");
+				zc.output();
+				System.out.println();
+				System.out.print(y+" = ");
+				zc1.output();
+				System.out.println();
 				System.out.println(x+" equal to "+y+" : "+zc.equalTo(zc1));
 				System.out.println(x+" less than "+y+" : "+zc.lessThan(zc1));
 				System.out.println(x+" greater than "+y+" : "+zc.greaterThan(zc1));
@@ -68,8 +74,8 @@ public class tester
 //		System.out.println("Is it last? : "+F.checkisLast());
 	
 //		System.out.println("\n"+z2.equalTo(z1));
-//		System.out.println(z1.lessThan(A));
-	//	System.out.println(z1.greaterThan(z2));
+//		System.out.println(z3.lessThan(z4));
+//		System.out.println(z3.greaterThan(z4));
 
 
 	}

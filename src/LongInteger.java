@@ -233,7 +233,7 @@ public class LongInteger {
 				}
 			}
 			else
-				return flag;
+				return false;
 		}
 
 		else
@@ -317,12 +317,12 @@ public class LongInteger {
 				}
 			}
 			else
-				return flag;
+				return false;
 		}
 
 		else
 		{
-			if((!this.getSign() || !i.getSign()) && this.getSign())
+			if((!this.getSign() || !i.getSign()) && !this.getSign())
 				return true;
 			else
 				return false;
