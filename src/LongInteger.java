@@ -65,13 +65,27 @@ public class LongInteger {
 //		return list.isLast(list.last());
 //	}
 
+	public void testcase2()
+	{
+		Position temp;
+		temp=list.last();
+		
+		while(temp!=list.first())
+		{
+			System.out.print(temp.getValue()+" ");
+			temp=list.before(temp);
+			
+		}
+		if(temp==list.first())
+			System.out.print(temp.getValue());
+	}
 
 	public LongInteger() {
 
 	}
 
 
-	@SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
 	public void output() {
 		int tmpno,dgts;
 		Position temp;
@@ -84,7 +98,7 @@ public class LongInteger {
 		{	if(this.getSign())
 				System.out.print("-");
 			temp=list.last();
-			System.out.print(temp.getValue()+" ");
+			System.out.print(temp.getValue());
 			while(temp!=list.first())
 			{
 				temp=list.before(temp);
@@ -103,7 +117,7 @@ public class LongInteger {
 						j=j+1;
 					}
 				}
-				System.out.print(temp.getValue()+" ");
+				System.out.print(temp.getValue());
 			}
 		}
 	}

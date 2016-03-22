@@ -34,8 +34,11 @@ public class tester
 			System.out.print(alph[i]+" : ");
 			zc.output();
 			System.out.println();
+			zc.testcase2();
+			System.out.println();
 			System.out.println("is Negative? : "+zc.getSign());
 			System.out.println("No. of digits : "+zc.getDigitCount());
+			System.out.println();
 		}
 		System.out.println();
 		System.out.println("Comparisons : ");
