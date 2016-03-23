@@ -55,26 +55,16 @@ public class LongInteger {
 		}
 	}
 
-//	public boolean checkisFirst()
-//	{
-//		return list.isFirst(list.first());
-//	}
-//
-//	public boolean checkisLast()
-//	{
-//		return list.isLast(list.last());
-//	}
-
 	public void testcase2()
 	{
 		Position temp;
 		temp=list.last();
-		
+
 		while(temp!=list.first())
 		{
 			System.out.print(temp.getValue()+" ");
 			temp=list.before(temp);
-			
+
 		}
 		if(temp==list.first())
 			System.out.print(temp.getValue());
@@ -85,7 +75,7 @@ public class LongInteger {
 	}
 
 
-@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public void output() {
 		int tmpno,dgts;
 		Position temp;
@@ -96,29 +86,29 @@ public class LongInteger {
 		}
 		else
 		{	if(this.getSign())
-				System.out.print("-");
-			temp=list.last();
-			System.out.print(temp.getValue());
-			while(temp!=list.first())
+			System.out.print("-");
+		temp=list.last();
+		System.out.print(temp.getValue());
+		while(temp!=list.first())
+		{
+			temp=list.before(temp);
+			tmpno=temp.getValue();
+			if(tmpno==0)
 			{
-				temp=list.before(temp);
-				tmpno=temp.getValue();
-				if(tmpno==0)
-				{
-					System.out.print("000");
-				}
-				else
-				{
-					dgts=UtilityOperations.digits(tmpno);
-					int j=0;
-					while(dgts<4 && j<4-dgts)
-					{
-						System.out.print("0");
-						j=j+1;
-					}
-				}
-				System.out.print(temp.getValue());
+				System.out.print("000");
 			}
+			else
+			{
+				dgts=UtilityOperations.digits(tmpno);
+				int j=0;
+				while(dgts<4 && j<4-dgts)
+				{
+					System.out.print("0");
+					j=j+1;
+				}
+			}
+			System.out.print(temp.getValue());
+		}
 		}
 	}
 
@@ -341,7 +331,7 @@ public class LongInteger {
 			else
 				return false;
 		}
-		
+
 	}
 
 
@@ -351,7 +341,7 @@ public class LongInteger {
 
 /*
     public LongInteger add(LongInteger i) {
-
+    	
     }
 
     public LongInteger subtract(LongInteger i) {
