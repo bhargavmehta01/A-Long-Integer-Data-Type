@@ -4,7 +4,7 @@ public class UtilityOperations {
 		int overdgt=0;
 		if(t/10000>0)
 		{
-			overdgt=Math.abs(t/10000);
+			overdgt=t/10000;
 			return overdgt;
 		}
 		else
@@ -28,7 +28,7 @@ public class UtilityOperations {
 		while(t>0)
 		{
 			dgts=dgts+1;
-			t=Math.abs(t/10);
+			t=t/10;
 		}
 		return dgts;
 	}
