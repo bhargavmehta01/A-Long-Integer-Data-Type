@@ -1,5 +1,5 @@
 
-public class tester 
+public class main 
 {
 
 	public static void main(String[] args) {
@@ -27,6 +27,7 @@ public class tester
 			System.out.print(alph[i]+" : ");
 			z1.output();
 			System.out.println();
+			System.out.print("Values at all positions : ");
 			z1.testcase2();
 			System.out.println();
 			System.out.println("is Negative? : "+z1.getSign());
@@ -43,12 +44,6 @@ public class tester
 			{
 				z2=arr[j];
 				y=alph[j];
-				System.out.print(x+" = ");
-				z1.output();
-				System.out.println();
-				System.out.print(y+" = ");
-				z2.output();
-				System.out.println();
 				System.out.println(x+" equal to "+y+" : "+z1.equalTo(z2));
 				System.out.println(x+" less than "+y+" : "+z1.lessThan(z2));
 				System.out.println(x+" greater than "+y+" : "+z1.greaterThan(z2));
