@@ -336,11 +336,271 @@ public class LongInteger {
 
 
 
-/*
-    public LongInteger add(LongInteger i) {
-    	
-    }
 
+	public LongInteger add(LongInteger i) 
+	{
+		Position temp1,temp2;
+		temp1=this.list.first();
+		temp2=i.list.first();
+		LongInteger z = new LongInteger();
+		int sum=0,carry=0;
+		if(this.getSign()==i.getSign())
+		{
+			if(this.getSign())
+				z.setSign(true);
+			else
+				z.setSign(false);
+			while(temp1!=this.list.last() && temp2!=i.list.last())
+			{
+				sum=temp1.getValue()+temp2.getValue()+carry;
+				if(z.list.isEmpty())
+					z.list.insertFirst(UtilityOperations.underflow(sum));
+				else
+					z.list.insertLast(UtilityOperations.underflow(sum));
+				carry=UtilityOperations.overflow(sum);
+				temp1=this.list.after(temp1);
+				temp2=i.list.after(temp2);
+			}
+			if(temp2==i.list.last() && temp1!=this.list.last())
+			{
+				sum=temp1.getValue()+temp2.getValue()+carry;
+				z.list.insertLast(UtilityOperations.underflow(sum));
+				carry=UtilityOperations.overflow(sum);
+				while(temp1!=this.list.last())
+				{
+					temp1=this.list.after(temp1);
+					if(temp1!=this.list.last())
+					{
+						sum=temp1.getValue()+carry;
+						z.list.insertLast(UtilityOperations.underflow(sum));
+						carry=UtilityOperations.overflow(sum);
+					}
+				}
+				if(temp1==this.list.last())
+				{
+					sum=temp1.getValue()+carry;
+					carry=UtilityOperations.overflow(sum);
+					z.list.insertLast(UtilityOperations.underflow(sum));
+					if(carry!=0)
+						z.list.insertLast(carry);
+				}
+			}
+			else if(temp1==this.list.last() && temp2!=i.list.last())
+			{
+				sum=temp1.getValue()+temp2.getValue()+carry;
+				z.list.insertLast(UtilityOperations.underflow(sum));
+				carry=UtilityOperations.overflow(sum);
+				while(temp2!=i.list.last())
+				{
+					temp2=i.list.after(temp2);
+					if(temp2!=i.list.last())
+					{
+						sum=temp2.getValue()+carry;
+						z.list.insertLast(UtilityOperations.underflow(sum));
+						carry=UtilityOperations.overflow(sum);
+					}
+				}
+				if(temp2==i.list.last())
+				{
+					sum=temp2.getValue()+carry;
+					carry=UtilityOperations.overflow(sum);
+					z.list.insertLast(UtilityOperations.underflow(sum));
+					if(carry!=0)
+						z.list.insertLast(carry);
+				}
+			}			
+			if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
+			{
+				sum=temp1.getValue()+temp2.getValue()+carry;
+				z.list.insertLast(UtilityOperations.underflow(sum));
+				carry=UtilityOperations.overflow(sum);
+
+				if(carry!=0)
+					z.list.insertLast(carry);
+			}
+		}
+		else if(this.getSign()!=i.getSign())
+		{
+			if(this.getDigitCount()>i.getDigitCount() || (this.getDigitCount()==i.getDigitCount() && this.list.last().getValue()>i.list.last().getValue()))
+			{
+				int extra=temp1.getValue();
+				if(this.getSign() && this.getDigitCount()>i.getDigitCount())
+					z.setSign(true);
+				if(this.getDigitCount()==i.getDigitCount() && this.getSign() && this.list.last().getValue()>i.list.last().getValue())
+					z.setSign(true);
+				
+				while(temp1!=this.list.last() && temp2!=i.list.last())
+				{
+					if(temp1.getValue()<temp2.getValue())
+					{
+						sum=((extra+10000)-temp2.getValue());
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else		
+							z.list.insertLast(sum);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp1.getValue()-1;
+					}
+					else
+					{
+						sum=extra-temp2.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else
+							z.list.insertLast(sum);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp1.getValue();
+					}
+				}
+				if(temp2==i.list.last() && temp1!=this.list.last())
+				{
+					if(extra<temp2.getValue())
+					{
+						sum=((extra+10000)-temp2.getValue());
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else
+							z.list.insertLast(sum);
+						temp1=this.list.after(temp1);
+						extra=temp1.getValue()-1;
+						while(temp1!=this.list.last())
+						{
+							z.list.insertLast(extra);
+							temp1=this.list.after(temp1);
+							extra=temp1.getValue();
+						}
+						if(temp1==this.list.last())
+						{
+							z.list.insertLast(extra);
+						}
+					}
+					else
+					{
+						sum=extra-temp2.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else
+							z.list.insertLast(sum);
+				//		extra=temp1.getValue();
+						while(temp1!=this.list.last())
+						{
+							temp1=this.list.after(temp1);
+							extra=temp1.getValue();
+							z.list.insertLast(extra);
+						}
+					}
+				}
+				
+				if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
+				{
+					if(extra<temp2.getValue())
+						sum=temp2.getValue()-extra;
+					else
+						sum=extra-temp2.getValue();
+					z.list.insertLast(sum);
+				}
+			}
+			else 
+			{
+				int extra=temp2.getValue();
+				if(i.getSign())
+					z.setSign(true);
+				while(temp1!=this.list.last() && temp2!=i.list.last())
+				{
+					if(temp1.getValue()<extra)
+					{
+						//sum=((extra+10000)-temp2.getValue());
+						sum=extra-temp1.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else		
+							z.list.insertLast(sum);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+					}
+					else if(temp1.getValue()==extra)			//			Case		
+					{											//				when 
+						sum=extra-temp1.getValue();				//				both the numbers will be equal.
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else		
+							z.list.insertLast(sum);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+					}
+					else
+					{
+						sum=((extra+10000)-temp1.getValue());
+						//sum=extra-temp2.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else
+							z.list.insertLast(sum);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue()-1;
+					}
+				}
+				if(temp1==this.list.last() && temp2!=i.list.last())
+				{
+					if(temp1.getValue()<extra)
+					{
+						sum=extra-temp1.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else
+							z.list.insertLast(sum);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+						while(temp2!=i.list.last())
+						{
+							z.list.insertLast(extra);
+							temp2=i.list.after(temp2);
+							extra=temp2.getValue();
+						//	z.list.insertLast(temp2.getValue());
+						}
+						if(temp2==i.list.last())
+						{
+							z.list.insertLast(extra);
+						}
+					}
+					else
+					{
+						sum=((extra+10000)-temp1.getValue());
+						//sum=extra-temp2.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(sum);
+						else
+							z.list.insertLast(sum);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue()-1;
+						while(temp2!=i.list.last())
+						{
+							z.list.insertLast(extra);
+							temp2=i.list.after(temp2);
+							extra=temp2.getValue();
+							//z.list.insertLast(temp2.getValue());
+						}
+						if(temp2==i.list.last())
+						{
+							z.list.insertLast(extra);
+						}
+					}
+				}
+				if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
+				{
+					sum=extra-temp1.getValue();
+					z.list.insertLast(sum);
+				}
+			}
+		}
+		return z;
+	}
+/*
     public LongInteger subtract(LongInteger i) {
 
     }
