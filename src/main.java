@@ -18,8 +18,8 @@ public class main
 		LongInteger L = I.add(I);
 		LongInteger M = A.add(I);
 		LongInteger N = B.add(K);
-		LongInteger m1=new LongInteger("33342341");
-		LongInteger m2=new LongInteger("-224133331782");
+		LongInteger m1=new LongInteger("12333342341");
+		LongInteger m2=new LongInteger("33331782");
 		
 
 		final LongInteger[] arr = {A , B , C , D , E , F , G , H , I};
@@ -84,17 +84,16 @@ public class main
 				y=alph[j];
 				System.out.print(x+" + "+y+" = ");
 				z1.add(z2).output();
-//				if(z1.add(z2).equalTo(z2.add(z1)))
-//					System.out.println("\n true");
-//				else
-//					System.out.println("\n false");
+				if(z1.add(z2).equalTo(z2.add(z1)))
+					System.out.println("\n true");
+				else
+					System.out.println("\n false");
 				System.out.println();
 			}
 		}
-		
-	//	B.add(A).testcase2();
-		J.output();
-	//	A.add(H).output();
+	
+	//	J.output();
+		m1.subtract(m2).output();
 	}
 
 }
