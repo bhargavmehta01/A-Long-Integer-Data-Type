@@ -18,8 +18,8 @@ public class main
 		LongInteger L = I.add(I);
 		LongInteger M = A.add(I);
 		LongInteger N = B.add(K);
-		LongInteger m1=new LongInteger("12333342341");
-		LongInteger m2=new LongInteger("33331782");
+		LongInteger m1=new LongInteger("-75466577988");
+		LongInteger m2=new LongInteger("-11112222");
 		
 
 		final LongInteger[] arr = {A , B , C , D , E , F , G , H , I};
@@ -90,10 +90,29 @@ public class main
 					System.out.println("\n false");
 				System.out.println();
 			}
+			
 		}
-	
-	//	J.output();
-		m1.subtract(m2).output();
+		
+		System.out.println("Subtraction : ");
+		for(int k=0; k<9; k++)
+		{
+			z1=arr[k];
+			x=alph[k];
+			for(int j=0; j<9; j++)
+			{
+				z2=arr[j];
+				y=alph[j];
+				
+				System.out.print(x+" - "+y+" = ");
+				z1.subtract(z2).output();
+				if(z1.subtract(z2).equalTo(z2.subtract(z1)))
+					System.out.println("\n true");
+				else
+					System.out.println("\n false");
+				System.out.println();
+			}
+		}
+		m1.add(m2).output();
 	}
 
 }

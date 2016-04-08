@@ -346,7 +346,7 @@ public class LongInteger {
 		int sum=0,carry=0;
 		if(this.getSign()==i.getSign())
 		{
-			if(this.getSign())
+			if((this.getSign() && this.getDigitCount()>i.getDigitCount()) || (i.getSign() && i.getDigitCount()>this.getDigitCount()))
 				z.setSign(true);
 			else
 				z.setSign(false);
@@ -421,159 +421,21 @@ public class LongInteger {
 		}
 		else if(this.getSign()!=i.getSign())
 		{
-			if(this.getDigitCount()>i.getDigitCount() || (this.getDigitCount()==i.getDigitCount() && this.list.last().getValue()>i.list.last().getValue()))
+			if(this.getSign() && !i.getSign())
 			{
-				int extra=temp1.getValue();
-				if(this.getSign() && this.getDigitCount()>i.getDigitCount())
-					z.setSign(true);
-				if(this.getDigitCount()==i.getDigitCount() && this.getSign() && this.list.last().getValue()>i.list.last().getValue())
-					z.setSign(true);
-				
-				while(temp1!=this.list.last() && temp2!=i.list.last())
-				{
-					if(temp1.getValue()<temp2.getValue())
-					{
-						sum=((extra+10000)-temp2.getValue());
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else		
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						temp2=i.list.after(temp2);
-						extra=temp1.getValue()-1;
-					}
-					else
-					{
-						sum=extra-temp2.getValue();
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						temp2=i.list.after(temp2);
-						extra=temp1.getValue();
-					}
-				}
-				if(temp2==i.list.last() && temp1!=this.list.last())
-				{
-					if(extra<temp2.getValue())
-					{
-						sum=((extra+10000)-temp2.getValue());
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						extra=temp1.getValue()-1;
-					}
-					else
-					{
-						sum=extra-temp2.getValue();
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						extra=temp1.getValue();
-					}
-					while(temp1!=this.list.last())
-					{
-						z.list.insertLast(extra);
-						temp1=this.list.after(temp1);
-						extra=temp1.getValue();
-					}
-					if(temp1==this.list.last())
-						z.list.insertLast(extra);
-				}
-				
-				if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
-				{
-					if(extra<temp2.getValue())
-						sum=temp2.getValue()-extra;
-					else
-						sum=extra-temp2.getValue();
-					z.list.insertLast(sum);
-				}
+			//	LongInteger x;
+				this.setSign(false);
+				z=i.subtract(this);
+				this.setSign(true);
+				return z;
 			}
-			else 
+			
+			if(!this.getSign() && i.getSign())
 			{
-				int extra=temp2.getValue();
-				if(i.getSign())
-					z.setSign(true);
-				while(temp1!=this.list.last() && temp2!=i.list.last())
-				{
-					if(temp1.getValue()<extra)
-					{
-						sum=extra-temp1.getValue();
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else		
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						temp2=i.list.after(temp2);
-						extra=temp2.getValue();
-					}
-					else if(temp1.getValue()==extra)			//			Case		
-					{											//				when 
-						sum=extra-temp1.getValue();				//				both the numbers will be equal.
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else		
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						temp2=i.list.after(temp2);
-						extra=temp2.getValue();
-					}											//
-					else
-					{
-						sum=((extra+10000)-temp1.getValue());
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else
-							z.list.insertLast(sum);
-						temp1=this.list.after(temp1);
-						temp2=i.list.after(temp2);
-						extra=temp2.getValue()-1;
-					}
-				}
-				if(temp1==this.list.last() && temp2!=i.list.last())
-				{
-					if(temp1.getValue()<extra)
-					{
-						sum=extra-temp1.getValue();
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else
-							z.list.insertLast(sum);
-						temp2=i.list.after(temp2);
-						extra=temp2.getValue();
-					}
-					else
-					{
-						sum=((extra+10000)-temp1.getValue());
-						if(z.list.isEmpty())
-							z.list.insertFirst(sum);
-						else
-							z.list.insertLast(sum);
-						temp2=i.list.after(temp2);
-						extra=temp2.getValue()-1;
-					}
-					while(temp2!=i.list.last())
-					{
-						z.list.insertLast(extra);
-						temp2=i.list.after(temp2);
-						extra=temp2.getValue();
-					}
-					if(temp2==i.list.last())
-					{
-						z.list.insertLast(extra);
-					}
-				}
-				if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
-				{
-					sum=extra-temp1.getValue();
-					z.list.insertLast(sum);
-				}
+				i.setSign(false);
+				z=this.subtract(i);
+				i.setSign(true);
+				return z;
 			}
 		}
 		return z;
@@ -590,9 +452,25 @@ public class LongInteger {
 			if(this.getDigitCount()>i.getDigitCount() || (this.getDigitCount()==i.getDigitCount() && this.list.last().getValue()>i.list.last().getValue()))
 			{
 				extra=temp1.getValue();
+				if(this.getSign() && this.getDigitCount()>i.getDigitCount())
+					z.setSign(true);
+				if(this.getDigitCount()==i.getDigitCount() && this.getSign() && this.list.last().getValue()>i.list.last().getValue())
+					z.setSign(true);
+
 				while(temp1!=this.list.last() && temp2!=i.list.last())
 				{
-					if(extra>temp2.getValue())
+					if(temp1.getValue()<temp2.getValue())
+					{
+						diff=((extra+10000)-temp2.getValue());
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else		
+							z.list.insertLast(diff);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp1.getValue()-1;
+					}
+					else
 					{
 						diff=extra-temp2.getValue();
 						if(z.list.isEmpty())
@@ -602,32 +480,11 @@ public class LongInteger {
 						temp1=this.list.after(temp1);
 						temp2=i.list.after(temp2);
 						extra=temp1.getValue();
-					}
-					else
-					{
-						diff=((extra+10000)-temp2.getValue());
-						if(z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp1=this.list.after(temp1);
-						temp2=i.list.after(temp2);
-						extra=temp1.getValue()-1;
 					}
 				}
 				if(temp2==i.list.last() && temp1!=this.list.last())
 				{
-					if(extra>temp2.getValue())
-					{
-						diff=extra-temp2.getValue();
-						if(z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp1=this.list.after(temp1);
-						extra=temp1.getValue();
-					}
-					else
+					if(extra<temp2.getValue())
 					{
 						diff=((extra+10000)-temp2.getValue());
 						if(z.list.isEmpty())
@@ -636,15 +493,153 @@ public class LongInteger {
 							z.list.insertLast(diff);
 						temp1=this.list.after(temp1);
 						extra=temp1.getValue()-1;
+					}
+					else
+					{
+						diff=extra-temp2.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else
+							z.list.insertLast(diff);
+						temp1=this.list.after(temp1);
+						extra=temp1.getValue();
 					}
 					while(temp1!=this.list.last())
 					{
 						z.list.insertLast(extra);
 						temp1=this.list.after(temp1);
+						extra=temp1.getValue();
 					}
 					if(temp1==this.list.last())
 						z.list.insertLast(extra);
 				}
+
+				if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
+				{
+					if(extra<temp2.getValue())
+						diff=temp2.getValue()-extra;
+					else
+						diff=extra-temp2.getValue();
+					z.list.insertLast(diff);
+				}
+			}
+			else 
+			{
+				if(!i.getSign() && i.getDigitCount()>this.getDigitCount())
+					z.setSign(true);
+				extra=temp2.getValue();
+				//	if(i.getSign())
+			//	z.setSign(true);
+				while(temp1!=this.list.last() && temp2!=i.list.last())
+				{
+					if(temp1.getValue()<extra)
+					{
+						diff=extra-temp1.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else		
+							z.list.insertLast(diff);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+					}
+					else if(temp1.getValue()==extra)			//			Case		
+					{											//				when 
+						diff=extra-temp1.getValue();				//				both the numbers will be equal.
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else		
+							z.list.insertLast(diff);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+						z.setSign(false);
+					}											//
+					else
+					{
+						diff=((extra+10000)-temp1.getValue());
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else
+							z.list.insertLast(diff);
+						temp1=this.list.after(temp1);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue()-1;
+					}
+				}
+				if(temp1==this.list.last() && temp2!=i.list.last())
+				{
+					if(temp1.getValue()<extra)
+					{
+						diff=extra-temp1.getValue();
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else
+							z.list.insertLast(diff);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+					}
+					else
+					{
+						diff=((extra+10000)-temp1.getValue());
+						if(z.list.isEmpty())
+							z.list.insertFirst(diff);
+						else
+							z.list.insertLast(diff);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue()-1;
+					}
+					while(temp2!=i.list.last())
+					{
+						z.list.insertLast(extra);
+						temp2=i.list.after(temp2);
+						extra=temp2.getValue();
+					}
+					if(temp2==i.list.last())
+					{
+						z.list.insertLast(extra);
+					}
+				}
+				if(temp1==this.list.last() && temp2==i.list.last() && this.list.size()==i.list.size())
+				{
+					diff=extra-temp1.getValue();
+					z.list.insertLast(diff);
+					z.setSign(false);
+				}
+			}
+		}
+		
+		else
+		{
+			if((this.getSign() && !i.getSign()) && this.getDigitCount()>i.getDigitCount())
+			{
+				i.setSign(true);
+				z=this.add(i);
+				i.setSign(false);
+			//	return z;
+			}
+			
+			if((this.getSign() && !i.getSign()) && i.getDigitCount()>this.getDigitCount())
+			{
+				i.setSign(true);
+				z=this.add(i);
+				i.setSign(false);
+			}
+			
+			if((!this.getSign() && i.getSign()) && i.getDigitCount()>this.getDigitCount())
+			{
+				i.setSign(false);
+				z=this.add(i);
+				i.setSign(true);
+			//	return z;
+			}
+			
+			if((!this.getSign() && i.getSign()) && this.getDigitCount()>i.getDigitCount())
+			{
+				i.setSign(false);
+				z=this.add(i);
+				i.setSign(true);
+			//	return z;
 			}
 		}
 		return z;
