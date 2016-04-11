@@ -4,6 +4,7 @@ public class main
 
 	public static void main(String[] args) {
 
+		LongInteger xc = new LongInteger("0");
 		LongInteger A = new LongInteger("2222");
 		LongInteger B = new LongInteger("99999999");
 		LongInteger C = new LongInteger("-246813575732");
@@ -18,8 +19,8 @@ public class main
 		LongInteger L = I.add(I);
 		LongInteger M = A.add(I);
 		LongInteger N = B.add(K);
-		LongInteger m1=new LongInteger("-75466577988");
-		LongInteger m2=new LongInteger("-11112222");
+		LongInteger m1=new LongInteger("88");
+		LongInteger m2=new LongInteger("2");
 		
 
 		final LongInteger[] arr = {A , B , C , D , E , F , G , H , I};
@@ -90,7 +91,6 @@ public class main
 					System.out.println("\n false");
 				System.out.println();
 			}
-			
 		}
 		
 		System.out.println("Subtraction : ");
@@ -113,6 +113,12 @@ public class main
 			}
 		}
 		m1.add(m2).output();
+		System.out.println();
+		B.subtract(B).output();
+		System.out.println();
+		A.add(xc).output();
+		System.out.println();
+		B.multiply(C).output();
 	}
 
 }
