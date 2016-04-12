@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 public class LongInteger {
 
 	// DO NOT CHANGE OR REMOVE THIS LINE (UNTIL STEP 3)
@@ -272,88 +274,88 @@ public class LongInteger {
 		Position temp1, temp2;
 		temp1 = this.list.first();
 		temp2 = i.list.first();
-		LongInteger z = new LongInteger();
+		LongInteger result = new LongInteger();
 		int sum = 0, carry = 0;
 		if (this.getSign() == i.getSign()) {
 			if ((this.getSign() && this.getDigitCount() > i.getDigitCount())
 					|| (i.getSign() && i.getDigitCount() > this.getDigitCount()))
-				z.setSign(true);
+				result.setSign(true);
 			else
-				z.setSign(false);
+				result.setSign(false);
 			while (temp1 != this.list.last() && temp2 != i.list.last()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				if (z.list.isEmpty())
-					z.list.insertFirst(UtilityOperations.underflow(sum));
+				if (result.list.isEmpty())
+					result.list.insertFirst(UtilityOperations.underflow(sum));
 				else
-					z.list.insertLast(UtilityOperations.underflow(sum));
+					result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 				temp1 = this.list.after(temp1);
 				temp2 = i.list.after(temp2);
 			}
 			if (temp2 == i.list.last() && temp1 != this.list.last()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				z.list.insertLast(UtilityOperations.underflow(sum));
+				result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 				while (temp1 != this.list.last()) {
 					temp1 = this.list.after(temp1);
 					if (temp1 != this.list.last()) {
 						sum = temp1.getValue() + carry;
-						z.list.insertLast(UtilityOperations.underflow(sum));
+						result.list.insertLast(UtilityOperations.underflow(sum));
 						carry = UtilityOperations.overflow(sum);
 					}
 				}
 				if (temp1 == this.list.last()) {
 					sum = temp1.getValue() + carry;
 					carry = UtilityOperations.overflow(sum);
-					z.list.insertLast(UtilityOperations.underflow(sum));
+					result.list.insertLast(UtilityOperations.underflow(sum));
 					if (carry != 0)
-						z.list.insertLast(carry);
+						result.list.insertLast(carry);
 				}
 			} else if (temp1 == this.list.last() && temp2 != i.list.last()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				z.list.insertLast(UtilityOperations.underflow(sum));
+				result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 				while (temp2 != i.list.last()) {
 					temp2 = i.list.after(temp2);
 					if (temp2 != i.list.last()) {
 						sum = temp2.getValue() + carry;
-						z.list.insertLast(UtilityOperations.underflow(sum));
+						result.list.insertLast(UtilityOperations.underflow(sum));
 						carry = UtilityOperations.overflow(sum);
 					}
 				}
 				if (temp2 == i.list.last()) {
 					sum = temp2.getValue() + carry;
 					carry = UtilityOperations.overflow(sum);
-					z.list.insertLast(UtilityOperations.underflow(sum));
+					result.list.insertLast(UtilityOperations.underflow(sum));
 					if (carry != 0)
-						z.list.insertLast(carry);
+						result.list.insertLast(carry);
 				}
 			}
 			if (temp1 == this.list.last() && temp2 == i.list.last() && this.list.size() == i.list.size()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				z.list.insertLast(UtilityOperations.underflow(sum));
+				result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 
 				if (carry != 0)
-					z.list.insertLast(carry);
+					result.list.insertLast(carry);
 			}
 		} else if (this.getSign() != i.getSign()) {
 			if (this.getSign() && !i.getSign()) {
 				// LongInteger x;
 				this.setSign(false);
-				z = i.subtract(this);
+				result = i.subtract(this);
 				this.setSign(true);
-				return z;
+				return result;
 			}
 
 			if (!this.getSign() && i.getSign()) {
 				i.setSign(false);
-				z = this.subtract(i);
+				result = this.subtract(i);
 				i.setSign(true);
-				return z;
+				return result;
 			}
 		}
-		return z;
+		return result;
 	}
 
 	public LongInteger subtract(LongInteger i) {
@@ -361,143 +363,85 @@ public class LongInteger {
 		temp1 = this.list.first();
 		temp2 = i.list.first();
 		int diff = 0, extra = 0;
-		LongInteger z = new LongInteger();
-		if (this.getSign() == i.getSign()) {
-			if (this.getDigitCount() > i.getDigitCount() || (this.getDigitCount() == i.getDigitCount()
-					&& this.list.last().getValue() > i.list.last().getValue())) {
+		LongInteger result = new LongInteger();
+		if (this.getSign() == i.getSign() ) {
+			
+			if (this.getDigitCount() > i.getDigitCount() || this.getDigitCount() == i.getDigitCount() && ((this.getSign() && this.lessThan(i)) || (!this.getSign() && (this.greaterThan(i) || this.equalTo(i))))) 
+			{
 				extra = temp1.getValue();
 				if (this.getSign() && this.getDigitCount() > i.getDigitCount())
-					z.setSign(true);
+					result.setSign(true);
 				if (this.getDigitCount() == i.getDigitCount() && this.getSign()
 						&& this.list.last().getValue() > i.list.last().getValue())
-					z.setSign(true);
+					result.setSign(true);
 
-				while (temp1 != this.list.last() && temp2 != i.list.last()) {
-					if (temp1.getValue() < temp2.getValue()) {
-						diff = ((extra + 10000) - temp2.getValue());
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp1 = this.list.after(temp1);
-						temp2 = i.list.after(temp2);
-						extra = temp1.getValue() - 1;
-					} else {
-						diff = extra - temp2.getValue();
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp1 = this.list.after(temp1);
-						temp2 = i.list.after(temp2);
-						extra = temp1.getValue();
-					}
-				}
-				if (temp2 == i.list.last() && temp1 != this.list.last()) {
+				while (temp1 != null && temp2 != null) {
 					if (extra < temp2.getValue()) {
 						diff = ((extra + 10000) - temp2.getValue());
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
+						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)))
+							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
-						extra = temp1.getValue() - 1;
+						temp2 = i.list.after(temp2);
+						if(temp1!=null)
+							extra = temp1.getValue() - 1;
 					} else {
 						diff = extra - temp2.getValue();
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
+						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)))
+							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
-						extra = temp1.getValue();
+						temp2 = i.list.after(temp2);
+						if(temp1!=null)
+							extra = temp1.getValue();
 					}
-					while (temp1 != this.list.last()) {
-						z.list.insertLast(extra);
-						temp1 = this.list.after(temp1);
-						extra = temp1.getValue();
+				}
+				if(temp2 == null && temp1 != null)
+					{
+						while (temp1 != this.list.last()) {
+							result.list.insertLast(extra);
+							temp1 = this.list.after(temp1);
+							extra = temp1.getValue();
+						}
+						if (temp1 == this.list.last())
+							if(extra!=0)
+								result.list.insertLast(extra);
 					}
-					if (temp1 == this.list.last())
-						z.list.insertLast(extra);
-				}
-
-				if (temp1 == this.list.last() && temp2 == i.list.last() && this.list.size() == i.list.size()) {
-					if (extra < temp2.getValue())
-						diff = temp2.getValue() - extra;
-					else
-						diff = extra - temp2.getValue();
-					z.list.insertLast(diff);
-				}
-			} else {
-				if (!i.getSign() && i.getDigitCount() > this.getDigitCount())
-					z.setSign(true);
+			} else 
+			{
+				if ((!i.getSign() && i.getDigitCount() > this.getDigitCount()) || (this.getDigitCount()==i.getDigitCount() && i.greaterThan(this)))
+					result.setSign(true);
 				extra = temp2.getValue();
-				// if(i.getSign())
-				// z.setSign(true);
-				while (temp1 != this.list.last() && temp2 != i.list.last()) {
-					if (temp1.getValue() < extra) {
+
+				while (temp1 != null && temp2 != null) {
+					if (temp1.getValue() < extra || temp1.getValue() == extra) {
 						diff = extra - temp1.getValue();
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
+						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)))
+							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
-						extra = temp2.getValue();
-					} else if (temp1.getValue() == extra) // Case
-					{ // when
-						diff = extra - temp1.getValue(); // both the numbers
-						// will be equal.
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp1 = this.list.after(temp1);
-						temp2 = i.list.after(temp2);
-						extra = temp2.getValue();
-						z.setSign(false);
-					} //
+						if(temp2!=null)
+							extra = temp2.getValue();
+					} 													
 					else {
 						diff = ((extra + 10000) - temp1.getValue());
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
+						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)))
+							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
-						extra = temp2.getValue() - 1;
+						if(temp2!=null)
+							extra = temp2.getValue() - 1;
 					}
 				}
-				if (temp1 == this.list.last() && temp2 != i.list.last()) {
-					if (temp1.getValue() < extra) {
-						diff = extra - temp1.getValue();
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp2 = i.list.after(temp2);
-						extra = temp2.getValue();
-					} else {
-						diff = ((extra + 10000) - temp1.getValue());
-						if (z.list.isEmpty())
-							z.list.insertFirst(diff);
-						else
-							z.list.insertLast(diff);
-						temp2 = i.list.after(temp2);
-						extra = temp2.getValue() - 1;
-					}
+				if (temp1 == null && temp2 != null) 
+				{
 					while (temp2 != i.list.last()) {
-						z.list.insertLast(extra);
+						result.list.insertLast(extra);
 						temp2 = i.list.after(temp2);
 						extra = temp2.getValue();
 					}
 					if (temp2 == i.list.last()) {
-						z.list.insertLast(extra);
+						if(extra!=0)
+							result.list.insertLast(extra);
 					}
-				}
-				if (temp1 == this.list.last() && temp2 == i.list.last() && this.list.size() == i.list.size()) {
-					diff = extra - temp1.getValue();
-					z.list.insertLast(diff);
-					z.setSign(false);
 				}
 			}
 		}
@@ -505,104 +449,81 @@ public class LongInteger {
 		else {
 			if ((this.getSign() && !i.getSign()) && this.getDigitCount() > i.getDigitCount()) {
 				i.setSign(true);
-				z = this.add(i);
+				result = this.add(i);
 				i.setSign(false);
 				// return z;
 			}
 
 			if ((this.getSign() && !i.getSign()) && i.getDigitCount() > this.getDigitCount()) {
 				i.setSign(true);
-				z = this.add(i);
+				result = this.add(i);
 				i.setSign(false);
 			}
 
 			if ((!this.getSign() && i.getSign()) && i.getDigitCount() > this.getDigitCount()) {
 				i.setSign(false);
-				z = this.add(i);
+				result = this.add(i);
 				i.setSign(true);
 				// return z;
 			}
 
 			if ((!this.getSign() && i.getSign()) && this.getDigitCount() > i.getDigitCount()) {
 				i.setSign(false);
-				z = this.add(i);
+				result = this.add(i);
 				i.setSign(true);
 				// return z;
 			}
 		}
-		// z.printdiff();
-		return z;
-	}
-
-	public void printdiff() {
-		Position temp, mp;
-		temp = this.list.last();
-		mp = this.list.first();
-		LongInteger z = new LongInteger();
-		while (temp.getValue() == 0) {
-			temp = this.list.before(temp);
-		}
-		if (temp == this.list.first() && temp.getValue() == 0) {
-			z.list.insertFirst(0);
-		}
-		if (temp == this.list.first() || temp.getValue() != 0) {
-			while (mp != temp) {
-				if (z.list.isEmpty())
-					z.list.insertFirst(mp.getValue());
-				else
-					z.list.insertLast(mp.getValue());
-				mp = this.list.after(mp);
-			}
-			if (mp == temp) {
-				z.list.insertLast(mp.getValue());
-			}
-			// this.list.insertLast(temp.getValue());
-
-		}
+			Position ex=result.list.last();
+			if(ex.getValue()==0 && result.list.last()==result.list.first())
+				result = new LongInteger("0");
+			else if(ex.getValue()==0 && result.list.before(ex).getValue()==0)
+				result = new LongInteger("0");
+		return result;
 	}
 
 	public LongInteger multiply(LongInteger i) {
 		Position temp1, temp2;
 		temp1 = this.list.first();
 		temp2 = i.list.first();
-		LongInteger z1 = new LongInteger("0");
+		LongInteger mult = new LongInteger("0");
 		int prod, k = 0;
 		
 		while (temp2 != null) {
-			LongInteger z = new LongInteger();
+			LongInteger result = new LongInteger();
 			int carry=0;
 			temp1 = this.list.first();
 			while (temp1 != null) {
 				
 				prod = (temp1.getValue() * temp2.getValue()) + carry;
 				carry = UtilityOperations.overflow(prod);
-				if (z.list.isEmpty())
-					z.list.insertFirst(UtilityOperations.underflow(prod));
+				if (result.list.isEmpty())
+					result.list.insertFirst(UtilityOperations.underflow(prod));
 				else
-					z.list.insertLast(UtilityOperations.underflow(prod));
+					result.list.insertLast(UtilityOperations.underflow(prod));
 
 				temp1 = this.list.after(temp1);
 			}
 			if(carry!=0)
-				z.list.insertLast(carry);
+				result.list.insertLast(carry);
 			for (int b = 0; b < k; b++) {
-				z.list.insertFirst(0);
+				result.list.insertFirst(0);
 			}
 
 			k++;
 			temp2 = i.list.after(temp2);
-			z1 = z1.add(z);
+			mult = mult.add(result);
 		}
 		if((this.getSign() && i.getSign()) || (!this.getSign() && !i.getSign()))
-			z1.setSign(false);
+			mult.setSign(false);
 		else
-			z1.setSign(true);
-		return z1;
+			mult.setSign(true);
+		return mult;
 	}
-
+/*
 	  public LongInteger power(int p) {
 		  
 	  }
-
+*/
 
 }

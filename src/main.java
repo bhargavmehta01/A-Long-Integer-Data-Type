@@ -19,8 +19,8 @@ public class main
 		LongInteger L = I.add(I);
 		LongInteger M = A.add(I);
 		LongInteger N = B.add(K);
-		LongInteger m1=new LongInteger("88");
-		LongInteger m2=new LongInteger("2");
+		LongInteger m1=new LongInteger("5555555567789");
+		LongInteger m2=new LongInteger("5555555551234");
 		
 
 		final LongInteger[] arr = {A , B , C , D , E , F , G , H , I};
@@ -92,7 +92,8 @@ public class main
 				System.out.println();
 			}
 		}
-		
+		A.subtract(A).output();
+		System.out.println();
 		System.out.println("Subtraction : ");
 		for(int k=0; k<9; k++)
 		{
@@ -119,6 +120,8 @@ public class main
 		A.add(xc).output();
 		System.out.println();
 		B.multiply(C).output();
+		System.out.println();
+		m1.subtract(m2).output();
 	}
 
 }
