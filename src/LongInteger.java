@@ -284,10 +284,7 @@ public class LongInteger {
 				result.setSign(false);
 			while (temp1 != this.list.last() && temp2 != i.list.last()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				if (result.list.isEmpty())
-					result.list.insertFirst(UtilityOperations.underflow(sum));
-				else
-					result.list.insertLast(UtilityOperations.underflow(sum));
+				result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 				temp1 = this.list.after(temp1);
 				temp2 = i.list.after(temp2);
@@ -341,7 +338,6 @@ public class LongInteger {
 			}
 		} else if (this.getSign() != i.getSign()) {
 			if (this.getSign() && !i.getSign()) {
-				// LongInteger x;
 				this.setSign(false);
 				result = i.subtract(this);
 				this.setSign(true);

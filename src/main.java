@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 
 public class main 
 {
@@ -21,7 +22,7 @@ public class main
 		LongInteger N = B.add(K);
 		LongInteger m1=new LongInteger("5555555567789");
 		LongInteger m2=new LongInteger("5555555551234");
-		
+//		BigInteger
 
 		final LongInteger[] arr = {A , B , C , D , E , F , G , H , I};
 		char alph[] = {'A','B','C','D','E','F','G','H','I'};
