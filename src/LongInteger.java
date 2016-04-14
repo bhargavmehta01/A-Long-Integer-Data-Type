@@ -511,28 +511,31 @@ public class LongInteger {
 	}
 
 	  public LongInteger power(int p) {
-		  int z,j=0;
-		  LongInteger k=this;
-		  LongInteger o=new LongInteger("1");
+		  int mod,j=0;
+		  LongInteger extra=this;
+		  LongInteger result=new LongInteger("1");
+		  LongInteger zero=new LongInteger("0");
+		  if(p<0)
+			  return zero;
 		  while(p>0)
 		  {
-			  z=p%2;
+			  mod=p%2;
 			  if(j==0)
 			  {
-				  if(z==1)
-					  o=k; 
+				  if(mod==1)
+					  result=extra; 
 			  }
-			  else if(z==1 && j>0)
+			  else if(mod==1 && j>0)
 			  {
-				  k=k.multiply(k);
-				  o=k.multiply(o);
+				  extra=extra.multiply(extra);
+				  result=extra.multiply(result);
 			  }
 			  else
-				  k=k.multiply(k);
+				  extra=extra.multiply(extra);
 			  j++;
 			  p=(int)Math.ceil(p/2);
 		  }
-		  return o;
+		  return result;
 	  }
 
 
