@@ -168,7 +168,6 @@ public class LongInteger {
 			} else
 				return false;
 		}
-
 		else if (!this.getSign() && !i.getSign()) {
 			if (this.list.size() < i.list.size())
 				return true;
@@ -194,7 +193,6 @@ public class LongInteger {
 			} else
 				return false;
 		}
-
 		else {
 			if ((!this.getSign() || !i.getSign()) && this.getSign())
 				return true;
@@ -260,14 +258,12 @@ public class LongInteger {
 			} else
 				return false;
 		}
-
 		else {
 			if ((!this.getSign() || !i.getSign()) && !this.getSign())
 				return true;
 			else
 				return false;
 		}
-
 	}
 
 	public LongInteger add(LongInteger i) {
@@ -447,7 +443,6 @@ public class LongInteger {
 				i.setSign(true);
 				result = this.add(i);
 				i.setSign(false);
-				// return z;
 			}
 
 			if ((this.getSign() && !i.getSign()) && i.getDigitCount() > this.getDigitCount()) {
@@ -460,14 +455,12 @@ public class LongInteger {
 				i.setSign(false);
 				result = this.add(i);
 				i.setSign(true);
-				// return z;
 			}
 
 			if ((!this.getSign() && i.getSign()) && this.getDigitCount() > i.getDigitCount()) {
 				i.setSign(false);
 				result = this.add(i);
 				i.setSign(true);
-				// return z;
 			}
 		}
 			Position ex=result.list.last();
@@ -516,10 +509,31 @@ public class LongInteger {
 			mult.setSign(true);
 		return mult;
 	}
-/*
+
 	  public LongInteger power(int p) {
-		  
+		  int z,j=0;
+		  LongInteger k=this;
+		  LongInteger o=new LongInteger("1");
+		  while(p>0)
+		  {
+			  z=p%2;
+			  if(j==0)
+			  {
+				  if(z==1)
+					  o=k; 
+			  }
+			  else if(z==1 && j>0)
+			  {
+				  k=k.multiply(k);
+				  o=k.multiply(o);
+			  }
+			  else
+				  k=k.multiply(k);
+			  j++;
+			  p=(int)Math.ceil(p/2);
+		  }
+		  return o;
 	  }
-*/
+
 
 }
