@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 
 public class LongInteger {
 
@@ -357,7 +356,7 @@ public class LongInteger {
 		int diff = 0, extra = 0;
 		LongInteger result = new LongInteger();
 		if (this.getSign() == i.getSign() ) {
-			
+
 			if (this.getDigitCount() > i.getDigitCount() || this.getDigitCount() == i.getDigitCount() && ((this.getSign() && this.lessThan(i)) || (!this.getSign() && (this.greaterThan(i) || this.equalTo(i))))) 
 			{
 				extra = temp1.getValue();
@@ -387,16 +386,16 @@ public class LongInteger {
 					}
 				}
 				if(temp2 == null && temp1 != null)
-					{
-						while (temp1 != this.list.last()) {
-							result.list.insertLast(extra);
-							temp1 = this.list.after(temp1);
-							extra = temp1.getValue();
-						}
-						if (temp1 == this.list.last())
-							if(extra!=0)
-								result.list.insertLast(extra);
+				{
+					while (temp1 != this.list.last()) {
+						result.list.insertLast(extra);
+						temp1 = this.list.after(temp1);
+						extra = temp1.getValue();
 					}
+					if (temp1 == this.list.last())
+						if(extra!=0)
+							result.list.insertLast(extra);
+				}
 			} else 
 			{
 				if ((!i.getSign() && i.getDigitCount() > this.getDigitCount()) || (this.getDigitCount()==i.getDigitCount() && i.greaterThan(this)))
@@ -463,11 +462,11 @@ public class LongInteger {
 				i.setSign(true);
 			}
 		}
-			Position ex=result.list.last();
-			if(ex.getValue()==0 && result.list.last()==result.list.first())
-				result = new LongInteger("0");
-			else if(ex.getValue()==0 && result.list.before(ex).getValue()==0)
-				result = new LongInteger("0");
+		Position ex=result.list.last();
+		if(ex.getValue()==0 && result.list.last()==result.list.first())
+			result = new LongInteger("0");
+		else if(ex.getValue()==0 && result.list.before(ex).getValue()==0)
+			result = new LongInteger("0");
 		return result;
 	}
 
@@ -477,13 +476,13 @@ public class LongInteger {
 		temp2 = i.list.first();
 		LongInteger mult = new LongInteger("0");
 		int prod, k = 0;
-		
+
 		while (temp2 != null) {
 			LongInteger result = new LongInteger();
 			int carry=0;
 			temp1 = this.list.first();
 			while (temp1 != null) {
-				
+
 				prod = (temp1.getValue() * temp2.getValue()) + carry;
 				carry = UtilityOperations.overflow(prod);
 				if (result.list.isEmpty())
@@ -510,33 +509,38 @@ public class LongInteger {
 		return mult;
 	}
 
-	  public LongInteger power(int p) {
-		  int mod,j=0;
-		  LongInteger extra=this;
-		  LongInteger result=new LongInteger("1");
-		  LongInteger zero=new LongInteger("0");
-		  if(p<0)
-			  return zero;
-		  while(p>0)
-		  {
-			  mod=p%2;
-			  if(j==0)
-			  {
-				  if(mod==1)
-					  result=extra; 
-			  }
-			  else if(mod==1 && j>0)
-			  {
-				  extra=extra.multiply(extra);
-				  result=extra.multiply(result);
-			  }
-			  else
-				  extra=extra.multiply(extra);
-			  j++;
-			  p=(int)Math.ceil(p/2);
-		  }
-		  return result;
-	  }
+	public LongInteger power(int p) {
+		int mod,j=0;
+		LongInteger extra=this;
+		LongInteger result=new LongInteger("0");
+
+		if(p<0)
+			return result;
+		while(p>0)
+		{
+			mod=p%2;
+			if(j==0)
+			{
+				if(mod==1)
+					result=extra; 
+				else
+					result=new LongInteger("1");
+			}
+			else if(mod==1 && j>0)
+			{
+				extra=extra.multiply(extra);
+				result=extra.multiply(result);
+				
+			}
+			else
+				extra=extra.multiply(extra);
+				
+			j++;
+			p=(int)Math.ceil(p/2);
+		}
+		
+		return result;
+	}
 
 
 }
