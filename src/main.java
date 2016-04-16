@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 
 public class main 
 {
@@ -173,24 +174,5 @@ public class main
 			val++;
 		}
 		
-//		System.out.println();
-//		BigInteger e = new BigInteger("1423550000000010056810000054593452907711568359");
-//		BigInteger r = new BigInteger("8436413168438618351351684694835434894364351846843435168484351684684315384684313846813153843135138413513843813513813138438435153454154515151513141592654543515316848613242587561516511233246174561276521672162416274123076527612");
-//		long strt = System.nanoTime();
-//		E.power(100);
-//		long end = System.nanoTime();
-//		long drt = (end-strt);
-//		System.out.println(drt);
-//		long st = System.nanoTime();
-//		e.pow(100);
-//		long ed = System.nanoTime();
-//		long dt = ed-st;
-//		System.out.println(dt);
-//		B.power(834).output();
-//		System.out.println(r.pow(30));
-//		A.power(1024).output();
-//		System.out.println();
-//		BigInteger k = new BigInteger("2222");
-//		System.out.println(k.pow(1024));
 	}
 }

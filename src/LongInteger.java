@@ -362,14 +362,14 @@ public class LongInteger {
 				extra = temp1.getValue();
 				if (this.getSign() && this.getDigitCount() > i.getDigitCount())
 					result.setSign(true);
-				if (this.getDigitCount() == i.getDigitCount() && this.getSign()
-						&& this.list.last().getValue() > i.list.last().getValue())
+				if (this.getDigitCount() == i.getDigitCount() && this.getSign() && i.greaterThan(this))
 					result.setSign(true);
+				
 
 				while (temp1 != null && temp2 != null) {
 					if (extra < temp2.getValue()) {
 						diff = ((extra + 10000) - temp2.getValue());
-						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)))
+						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)) || (diff!=0 && this.list.last()==this.list.first()))
 							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
@@ -377,7 +377,7 @@ public class LongInteger {
 							extra = temp1.getValue() - 1;
 					} else {
 						diff = extra - temp2.getValue();
-						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)))
+						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)) || (diff!=0 && this.list.last()==this.list.first()))
 							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
@@ -405,7 +405,7 @@ public class LongInteger {
 				while (temp1 != null && temp2 != null) {
 					if (temp1.getValue() < extra || temp1.getValue() == extra) {
 						diff = extra - temp1.getValue();
-						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)))
+						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)) || (diff!=0 && this.list.last()==this.list.first()))
 							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
@@ -414,7 +414,7 @@ public class LongInteger {
 					} 													
 					else {
 						diff = ((extra + 10000) - temp1.getValue());
-						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)))
+						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)) || (diff!=0 && this.list.last()==this.list.first()))
 							result.list.insertLast(diff);
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
@@ -533,12 +533,14 @@ public class LongInteger {
 				
 			}
 			else
+				{
 				extra=extra.multiply(extra);
 				
+				}
+				
 			j++;
-			p=(int)Math.ceil(p/2);
+			p=(int)Math.floor(p/2);
 		}
-		
 		return result;
 	}
 
