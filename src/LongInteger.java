@@ -2,14 +2,14 @@
 public class LongInteger {
 
 	// DO NOT CHANGE OR REMOVE THIS LINE (UNTIL STEP 3)
-	private SimpleList list = new SLLSimpleList();
+//	private SimpleList list = new SLLSimpleList();
 
 	private String lngint, substr;
 	private int intlength, listlength;
 	Integer number;
 	boolean isNegative = false;
 
-	// private SimpleList<? extends Position> list = new ArraySimpleList();
+	private SimpleList list = new ArraySimpleList();
 
 	public LongInteger(String s) {
 		if (s.isEmpty())
@@ -58,7 +58,7 @@ public class LongInteger {
 	}
 
 	public LongInteger() {
-
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -277,60 +277,115 @@ public class LongInteger {
 				result.setSign(true);
 			else
 				result.setSign(false);
-			while (temp1 != this.list.last() && temp2 != i.list.last()) {
+			while (temp1 != null && temp2 != null) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
+				if(result.list.isEmpty())
+					result.list.insertFirst(UtilityOperations.underflow(sum));
+				else
+					result.list.insertLast(UtilityOperations.underflow(sum));
 				temp1 = this.list.after(temp1);
 				temp2 = i.list.after(temp2);
 			}
-			if (temp2 == i.list.last() && temp1 != this.list.last()) {
+			if(temp2 == null && temp1 != null)
+			{
+				while(temp1 != null)
+				{
+					sum=temp1.getValue() + carry;
+					carry = UtilityOperations.overflow(sum);
+					if(result.list.isEmpty())
+						result.list.insertFirst(UtilityOperations.underflow(sum));
+					else
+						result.list.insertLast(UtilityOperations.underflow(sum));
+					temp1 = this.list.after(temp1);
+					if(temp1 == this.list.last() && carry != 0)
+						result.list.insertLast(carry);
+				}
+			}
+			else if(temp1 == null && temp2 != null)
+			{
+				while(temp2 != null)
+				{
+					sum=temp2.getValue() + carry;
+					carry = UtilityOperations.overflow(sum);
+					if(result.list.isEmpty())
+						result.list.insertFirst(UtilityOperations.underflow(sum));
+					else
+						result.list.insertLast(UtilityOperations.underflow(sum));
+					temp2 = i.list.after(temp2);
+					if(temp2 == i.list.last() && carry != 0)
+						result.list.insertLast(carry);
+				}
+			}
+			/*if (temp2 == i.list.last() && temp1 != this.list.last()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				result.list.insertLast(UtilityOperations.underflow(sum));
+				if(result.list.isEmpty())
+					result.list.insertFirst(UtilityOperations.underflow(sum));
+				else
+					result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 				while (temp1 != this.list.last()) {
 					temp1 = this.list.after(temp1);
 					if (temp1 != this.list.last()) {
 						sum = temp1.getValue() + carry;
-						result.list.insertLast(UtilityOperations.underflow(sum));
+						if(result.list.isEmpty())
+							result.list.insertFirst(UtilityOperations.underflow(sum));
+						else
+							result.list.insertLast(UtilityOperations.underflow(sum));
 						carry = UtilityOperations.overflow(sum);
 					}
 				}
 				if (temp1 == this.list.last()) {
 					sum = temp1.getValue() + carry;
 					carry = UtilityOperations.overflow(sum);
-					result.list.insertLast(UtilityOperations.underflow(sum));
+					if(result.list.isEmpty())
+						result.list.insertFirst(UtilityOperations.underflow(sum));
+					else
+						result.list.insertLast(UtilityOperations.underflow(sum));
 					if (carry != 0)
 						result.list.insertLast(carry);
 				}
-			} else if (temp1 == this.list.last() && temp2 != i.list.last()) {
+			} 
+			else if (temp1 == this.list.last() && temp2 != i.list.last()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				result.list.insertLast(UtilityOperations.underflow(sum));
+				if(result.list.isEmpty())
+					result.list.insertFirst(UtilityOperations.underflow(sum));
+				else
+					result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 				while (temp2 != i.list.last()) {
 					temp2 = i.list.after(temp2);
 					if (temp2 != i.list.last()) {
 						sum = temp2.getValue() + carry;
-						result.list.insertLast(UtilityOperations.underflow(sum));
+						if(result.list.isEmpty())
+							result.list.insertFirst(UtilityOperations.underflow(sum));
+						else
+							result.list.insertLast(UtilityOperations.underflow(sum));
 						carry = UtilityOperations.overflow(sum);
 					}
 				}
 				if (temp2 == i.list.last()) {
 					sum = temp2.getValue() + carry;
 					carry = UtilityOperations.overflow(sum);
-					result.list.insertLast(UtilityOperations.underflow(sum));
+					if(result.list.isEmpty())
+						result.list.insertFirst(UtilityOperations.underflow(sum));
+					else
+						result.list.insertLast(UtilityOperations.underflow(sum));
 					if (carry != 0)
 						result.list.insertLast(carry);
 				}
 			}
 			if (temp1 == this.list.last() && temp2 == i.list.last() && this.list.size() == i.list.size()) {
 				sum = temp1.getValue() + temp2.getValue() + carry;
-				result.list.insertLast(UtilityOperations.underflow(sum));
+				if(result.list.isEmpty())
+					result.list.insertFirst(UtilityOperations.underflow(sum));
+				else
+					result.list.insertLast(UtilityOperations.underflow(sum));
 				carry = UtilityOperations.overflow(sum);
 
 				if (carry != 0)
 					result.list.insertLast(carry);
-			}
+			}*/
 		} else if (this.getSign() != i.getSign()) {
 			if (this.getSign() && !i.getSign()) {
 				this.setSign(false);
@@ -370,7 +425,12 @@ public class LongInteger {
 					if (extra < temp2.getValue()) {
 						diff = ((extra + 10000) - temp2.getValue());
 						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)) || (diff!=0 && this.list.last()==this.list.first()))
-							result.list.insertLast(diff);
+						{
+							if(result.list.isEmpty())
+								result.list.insertFirst(diff);
+							else
+								result.list.insertLast(diff);
+						}
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
 						if(temp1!=null)
@@ -378,7 +438,12 @@ public class LongInteger {
 					} else {
 						diff = extra - temp2.getValue();
 						if((diff!=0 && !this.list.isLast(temp1)) || (diff==0 && this.list.isFirst(temp1)) || (diff!=0 && this.list.last()==this.list.first()))
-							result.list.insertLast(diff);
+						{
+							if(result.list.isEmpty())
+								result.list.insertFirst(diff);
+							else
+								result.list.insertLast(diff);
+						}	
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
 						if(temp1!=null)
@@ -388,7 +453,12 @@ public class LongInteger {
 				if(temp2 == null && temp1 != null)
 				{
 					while (temp1 != this.list.last()) {
-						result.list.insertLast(extra);
+						{
+							if(result.list.isEmpty())
+								result.list.insertFirst(extra);
+							else
+								result.list.insertLast(extra);
+						}
 						temp1 = this.list.after(temp1);
 						extra = temp1.getValue();
 					}
@@ -406,7 +476,12 @@ public class LongInteger {
 					if (temp1.getValue() < extra || temp1.getValue() == extra) {
 						diff = extra - temp1.getValue();
 						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)) || (diff!=0 && this.list.last()==this.list.first()))
-							result.list.insertLast(diff);
+						{
+							if(result.list.isEmpty())
+								result.list.insertFirst(diff);
+							else
+								result.list.insertLast(diff);
+						}
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
 						if(temp2!=null)
@@ -415,7 +490,12 @@ public class LongInteger {
 					else {
 						diff = ((extra + 10000) - temp1.getValue());
 						if((diff!=0 && !i.list.isLast(temp2)) || (diff==0 && i.list.isFirst(temp2)) || (diff!=0 && this.list.last()==this.list.first()))
-							result.list.insertLast(diff);
+						{
+							if(result.list.isEmpty())
+								result.list.insertFirst(diff);
+							else
+								result.list.insertLast(diff);
+						}	
 						temp1 = this.list.after(temp1);
 						temp2 = i.list.after(temp2);
 						if(temp2!=null)
@@ -425,7 +505,12 @@ public class LongInteger {
 				if (temp1 == null && temp2 != null) 
 				{
 					while (temp2 != i.list.last()) {
-						result.list.insertLast(extra);
+						{
+							if(result.list.isEmpty())
+								result.list.insertFirst(extra);
+							else
+								result.list.insertLast(extra);
+						}
 						temp2 = i.list.after(temp2);
 						extra = temp2.getValue();
 					}

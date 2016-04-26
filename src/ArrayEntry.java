@@ -9,13 +9,14 @@ public class ArrayEntry extends Position {
 		this.index = index;
     }
 	
-	/*
-	public int getIndex() {
+  //  ArrayEntry[] arr = new ArrayEntry[1000];
 	
+	public int getIndex() {
+		return index;
 	}
 	
 	public void setIndex(int index) {
-		
+		this.index = index;
 	}
-	*/
+	
 }

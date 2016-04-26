@@ -1,15 +1,15 @@
-import java.math.BigInteger;
 
 public class main 
 {
 
 	public static void main(String[] args) {
-
-
+		long tme,tme1;
+		tme=System.nanoTime();
+	
 		LongInteger A = new LongInteger("2222");
 		LongInteger B = new LongInteger("99999999");
 		LongInteger C = new LongInteger("-246813575732");
-		LongInteger D = new LongInteger("180270361023456789");
+		LongInteger D = new LongInteger("180270361023456789");	
 		LongInteger E = new LongInteger("1423550000000010056810000054593452907711568359");
 		LongInteger F = new LongInteger("-350003274594847454317890");
 		LongInteger G = new LongInteger("29302390234702973402973420937420973420937420937234872349872934872893472893749287423847");
@@ -82,8 +82,8 @@ public class main
 		System.out.println("Overflow digits in b are "+UtilityOperations.overflow(b));
 		System.out.println("Underflow digits in b are "+UtilityOperations.underflow(b));
 		System.out.println("Number of digits in b are "+UtilityOperations.digits(b));
-		
-		
+		tme1=System.nanoTime();
+		System.out.println(tme1-tme);
 		
 		
 		System.out.println("\n \n");
@@ -159,7 +159,6 @@ public class main
 			System.out.print(alph[l]+" ^ 30 = ");
 			z1.power(30).output();
 			System.out.println("\n");
-		
 		}
 		
 		System.out.println();
@@ -175,4 +174,5 @@ public class main
 		}
 		
 	}
+
 }
