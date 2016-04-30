@@ -3,9 +3,7 @@ public class main
 {
 
 	public static void main(String[] args) {
-		long tme,tme1;
-		tme=System.nanoTime();
-	
+
 		LongInteger A = new LongInteger("2222");
 		LongInteger B = new LongInteger("99999999");
 		LongInteger C = new LongInteger("-246813575732");
@@ -82,8 +80,7 @@ public class main
 		System.out.println("Overflow digits in b are "+UtilityOperations.overflow(b));
 		System.out.println("Underflow digits in b are "+UtilityOperations.underflow(b));
 		System.out.println("Number of digits in b are "+UtilityOperations.digits(b));
-		tme1=System.nanoTime();
-		System.out.println(tme1-tme);
+
 		
 		
 		System.out.println("\n \n");
