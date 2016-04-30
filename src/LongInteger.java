@@ -317,75 +317,7 @@ public class LongInteger {
 						result.list.insertLast(carry);
 				}
 			}
-			/*if (temp2 == i.list.last() && temp1 != this.list.last()) {
-				sum = temp1.getValue() + temp2.getValue() + carry;
-				if(result.list.isEmpty())
-					result.list.insertFirst(UtilityOperations.underflow(sum));
-				else
-					result.list.insertLast(UtilityOperations.underflow(sum));
-				carry = UtilityOperations.overflow(sum);
-				while (temp1 != this.list.last()) {
-					temp1 = this.list.after(temp1);
-					if (temp1 != this.list.last()) {
-						sum = temp1.getValue() + carry;
-						if(result.list.isEmpty())
-							result.list.insertFirst(UtilityOperations.underflow(sum));
-						else
-							result.list.insertLast(UtilityOperations.underflow(sum));
-						carry = UtilityOperations.overflow(sum);
-					}
-				}
-				if (temp1 == this.list.last()) {
-					sum = temp1.getValue() + carry;
-					carry = UtilityOperations.overflow(sum);
-					if(result.list.isEmpty())
-						result.list.insertFirst(UtilityOperations.underflow(sum));
-					else
-						result.list.insertLast(UtilityOperations.underflow(sum));
-					if (carry != 0)
-						result.list.insertLast(carry);
-				}
-			} 
-			else if (temp1 == this.list.last() && temp2 != i.list.last()) {
-				sum = temp1.getValue() + temp2.getValue() + carry;
-				if(result.list.isEmpty())
-					result.list.insertFirst(UtilityOperations.underflow(sum));
-				else
-					result.list.insertLast(UtilityOperations.underflow(sum));
-				carry = UtilityOperations.overflow(sum);
-				while (temp2 != i.list.last()) {
-					temp2 = i.list.after(temp2);
-					if (temp2 != i.list.last()) {
-						sum = temp2.getValue() + carry;
-						if(result.list.isEmpty())
-							result.list.insertFirst(UtilityOperations.underflow(sum));
-						else
-							result.list.insertLast(UtilityOperations.underflow(sum));
-						carry = UtilityOperations.overflow(sum);
-					}
-				}
-				if (temp2 == i.list.last()) {
-					sum = temp2.getValue() + carry;
-					carry = UtilityOperations.overflow(sum);
-					if(result.list.isEmpty())
-						result.list.insertFirst(UtilityOperations.underflow(sum));
-					else
-						result.list.insertLast(UtilityOperations.underflow(sum));
-					if (carry != 0)
-						result.list.insertLast(carry);
-				}
-			}
-			if (temp1 == this.list.last() && temp2 == i.list.last() && this.list.size() == i.list.size()) {
-				sum = temp1.getValue() + temp2.getValue() + carry;
-				if(result.list.isEmpty())
-					result.list.insertFirst(UtilityOperations.underflow(sum));
-				else
-					result.list.insertLast(UtilityOperations.underflow(sum));
-				carry = UtilityOperations.overflow(sum);
-
-				if (carry != 0)
-					result.list.insertLast(carry);
-			}*/
+			
 		} else if (this.getSign() != i.getSign()) {
 			if (this.getSign() && !i.getSign()) {
 				this.setSign(false);
@@ -596,7 +528,8 @@ public class LongInteger {
 
 	public LongInteger power(int p) {
 		int mod,j=0;
-		LongInteger extra=this;
+		LongInteger extra=new LongInteger("1");
+		extra=extra.multiply(this);
 		LongInteger result=new LongInteger("0");
 
 		if(p<0)
@@ -607,7 +540,7 @@ public class LongInteger {
 			if(j==0)
 			{
 				if(mod==1)
-					result=extra; 
+					result=extra;
 				else
 					result=new LongInteger("1");
 			}
